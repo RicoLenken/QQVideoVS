@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QQVideo", "QQVideo\QQVideo.csproj", "{B31A3978-70B0-412B-9309-65721DD97AAF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B31A3978-70B0-412B-9309-65721DD97AAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B31A3978-70B0-412B-9309-65721DD97AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B31A3978-70B0-412B-9309-65721DD97AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B31A3978-70B0-412B-9309-65721DD97AAF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
