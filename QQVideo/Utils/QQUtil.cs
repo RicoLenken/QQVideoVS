@@ -13,9 +13,9 @@ namespace QQVideo.Utils
 {
     public class QQUtil
     {
-       
 
 
+        private Process qqProcess;
         public string QQPath { get; set; }//QQ路径
         public IntPtr QQHandle { get; set; }//句柄
         private const int f11 = 122;
@@ -31,10 +31,10 @@ namespace QQVideo.Utils
             if ((bool)fileDialog.ShowDialog())
             {
                 QQPath = fileDialog.FileName;
-                Process qqProcess = Process.Start(QQPath);//启动程序
+                qqProcess = Process.Start(QQPath);//启动程序
                 Thread.Sleep(5000);
                 MessageBox.Show("程序进程是"+qqProcess.Id.ToString());
-                QQHandle = WindowUtil.FindWindow("注册");
+                QQHandle = WindowUtil.FindWindow(qqProcess.Id,"Bandicam");
             }
 
         }
@@ -42,15 +42,16 @@ namespace QQVideo.Utils
        
         public void SendKey() 
         {
-            //MessageBox.Show(QQHandle.ToString());
-            StringBuilder sb = new StringBuilder(512);
-            WindowUtil.GetWindowText(QQHandle, sb, sb.Capacity);
-            MessageBox.Show(sb.ToString());
-
-
-
+            WindowUtil.SetForegroundWindow(QQHandle);
+            WindowUtil.SendMessage(QQHandle,WM_KEYDOWN,f11,0);
         }
-
+        public void KillProcess()
+        {
+       
+            Process process = Process.GetProcessById(qqProcess.Id);
+            process.Kill();
+            
+        }
 
         private void GetQQRegistryKey()//尝试从注册表中找到QQ快捷方式路径
         {

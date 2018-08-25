@@ -37,5 +37,10 @@ namespace QQVideo
         {
             qqUtil.SendKey();
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            qqUtil.KillProcess();
+        }
     }
 }

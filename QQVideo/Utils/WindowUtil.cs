@@ -39,28 +39,34 @@ namespace QQVideo.Utils
         public static extern bool IsWindowVisible(IntPtr hWnd);
 
         #endregion
-        public static string test = "";
+        public static string test ;
+        public static int MyId =0;//进程id
         public static IntPtr MyHandle { get; set; } = IntPtr.Zero;//句柄
-        public static string MySoftware { get; set; }//进程id
-        public static IntPtr FindWindow(string software)
+        public static string MySoftware { get; set; }
+        public static IntPtr FindWindow(int id,string software)
         {
 
             Container container = new Container(MyFindCall);
+            MyId = id;
             MySoftware = software;
             EnumWindows(container, 0);
-            MessageBox.Show(test);
             return MyHandle;
 
         }
         private static bool MyFindCall(IntPtr hwnd,int lParam)
         {
-            StringBuilder sb = new StringBuilder(512);                
-            GetWindowText(MyHandle, sb, sb.Capacity);
-            if (IsWindow(hwnd))
+            int thisId = 0;
+            GetWindowThreadProcessId(hwnd, out thisId);
+            if (thisId==MyId && IsWindow(hwnd) )
             {
-                test += sb + "\r\n";
+                StringBuilder sb = new StringBuilder(128); 
+                GetWindowText(hwnd,sb,sb.Capacity);
+                if (sb.ToString().Contains(MySoftware))
+                {
+                    MyHandle = hwnd;    
+                }
             }
-     
+
             return true;
         }
 
