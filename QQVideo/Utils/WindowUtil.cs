@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Input;
 
 namespace QQVideo.Utils
 {
@@ -33,38 +34,45 @@ namespace QQVideo.Utils
         public static extern bool IsWindow(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        public static extern bool  IsWindowEnabled(IntPtr hWnd);
+        public static extern bool IsWindowEnabled(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         public static extern bool IsWindowVisible(IntPtr hWnd);
 
+        [DllImport("user32.dll")]
+        public static extern void keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
+   
+
+        public static void F11Clic()
+        {
+            //模拟F11按键
+            keybd_event(0x7A, 0,0, 0); //按下F11
+            keybd_event(0x7A, 0, 2, 0); //按下后松开F11
+        }
+
         #endregion
         public static string test ;
         public static int MyId =0;//进程id
-        public static IntPtr MyHandle { get; set; } = IntPtr.Zero;//句柄
+        public static List<IntPtr> MyHandleList { get; set; } = new List<IntPtr>(); //句柄
         public static string MySoftware { get; set; }
-        public static IntPtr FindWindow(int id,string software)
+        public static List<IntPtr> FindWindow(int id,string software)
         {
 
             Container container = new Container(MyFindCall);
             MyId = id;
             MySoftware = software;
             EnumWindows(container, 0);
-            return MyHandle;
+            MessageBox.Show(test);
+            return MyHandleList;
 
         }
         private static bool MyFindCall(IntPtr hwnd,int lParam)
         {
             int thisId = 0;
             GetWindowThreadProcessId(hwnd, out thisId);
-            if (thisId==MyId && IsWindow(hwnd) )
+            if (thisId==MyId)
             {
-                StringBuilder sb = new StringBuilder(128); 
-                GetWindowText(hwnd,sb,sb.Capacity);
-                if (sb.ToString().Contains(MySoftware))
-                {
-                    MyHandle = hwnd;    
-                }
+                MyHandleList.Add(hwnd);         
             }
 
             return true;

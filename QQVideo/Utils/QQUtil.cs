@@ -9,6 +9,7 @@ using System.Windows;
 using System.Runtime.InteropServices;
 using System.Threading;
 
+
 namespace QQVideo.Utils
 {
     public class QQUtil
@@ -17,11 +18,9 @@ namespace QQVideo.Utils
 
         private Process qqProcess;
         public string QQPath { get; set; }//QQ路径
-        public IntPtr QQHandle { get; set; }//句柄
-        private const int f11 = 122;
-        private const int f12 = 123;
-        private static int WM_KEYDOWN = 0x0100;
-        private static int WM_KEYUP = 0x0101;
+        public List<IntPtr> QQHandleList { get; set; }//句柄
+        //WM_SYSKEYDOWN = 0x0104;
+         
         public void GetQQPath()//获得qq的快捷方式
         {
 
@@ -34,7 +33,8 @@ namespace QQVideo.Utils
                 qqProcess = Process.Start(QQPath);//启动程序
                 Thread.Sleep(5000);
                 MessageBox.Show("程序进程是"+qqProcess.Id.ToString());
-                QQHandle = WindowUtil.FindWindow(qqProcess.Id,"Bandicam");
+                QQHandleList = WindowUtil.FindWindow(qqProcess.Id, "Bandicam");
+                
             }
 
         }
@@ -42,14 +42,18 @@ namespace QQVideo.Utils
        
         public void SendKey() 
         {
-            WindowUtil.SetForegroundWindow(QQHandle);
-            WindowUtil.SendMessage(QQHandle,WM_KEYDOWN,f11,0);
+           
+         
+
         }
         public void KillProcess()
         {
-       
-            Process process = Process.GetProcessById(qqProcess.Id);
-            process.Kill();
+            try
+            {
+                Process process = Process.GetProcessById(qqProcess.Id);
+                process.Kill();
+            }
+            catch { }
             
         }
 

@@ -3,15 +3,58 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:QQVideo"
+        xmlns:local="clr-namespace:QQVideo"    
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" Closed="Window_Closed">
-    <Grid>
-        <StackPanel>
-            <Button Content="打开QQ" Click="Button_Click"></Button>
-            <Button Content="发送信息" Click="Button_Click_1"></Button>
-        </StackPanel>
-        
-      
-    </Grid>
+        WindowStartupLocation="Manual"  
+        Title="家属会见软件" Height="200" Width="720" Closed="Window_Closed"  
+       AllowsTransparency="True"  Background="{x:Null}" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Style/Button.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Border CornerRadius="10" BorderThickness="2" BorderBrush="#FFFBFBFB" Opacity="0.85" >
+        <Border.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black"/>
+                <GradientStop Color="#FF3E4B5B" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="2*" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="家属会见录像软件" FontSize="20" Foreground="White" 
+                      VerticalAlignment="Center"  Margin="10,0"/>
+                <Button x:Name="btnClose" Height="30" Width="30"  Style="{StaticResource ButtonClose}" Click="btnClose_Click" Grid.Column="1"  >
+                    <Image Source="Image/Close.png"></Image>
+                </Button>
+            </Grid>
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <Button Margin="10,0" Height="80" Width="80" Style="{StaticResource ButtonIcon}">
+                    <Image Source="Image/QQ.png"></Image>
+
+                </Button>
+                <Button Margin="10,0" Height="80" Width="80" Style="{StaticResource ButtonIcon}"  >
+                    <Image Source="Image/Bandicam.jpg"></Image>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+
 </Window>

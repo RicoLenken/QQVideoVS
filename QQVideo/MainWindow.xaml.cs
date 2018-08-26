@@ -23,8 +23,12 @@ namespace QQVideo
     {
         private QQUtil qqUtil = new QQUtil();
         public MainWindow()
-        {
+        {       
             InitializeComponent();
+            double left = (SystemParameters.PrimaryScreenWidth - this.Width) / 2;
+            this.Left = left;
+            //MessageBox.Show(SystemParameters.PrimaryScreenWidth.ToString() + "," + this.Width + "," + left);
+            this.Top = 100;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -41,6 +45,16 @@ namespace QQVideo
         private void Window_Closed(object sender, EventArgs e)
         {
             qqUtil.KillProcess();
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
