@@ -41,7 +41,17 @@ namespace QQVideo.Utils
 
         [DllImport("user32.dll")]
         public static extern void keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
-   
+
+
+        [DllImport("user32.dll")]
+        public static extern void ShowWindow(IntPtr hWnd,int nCmdShow);
+
+        [DllImport("user32.dll")]
+        public static extern void GetWindowRect(IntPtr hWnd, out Rect rect);
+
+        [DllImport("user32.dll")]
+        public static extern void GetClientRect(IntPtr hWnd, out Rect rect);
+
 
         public static void F11Clic()
         {
@@ -55,12 +65,11 @@ namespace QQVideo.Utils
         public static int MyId =0;//进程id
         public static List<IntPtr> MyHandleList { get; set; } = new List<IntPtr>(); //句柄
         public static string MySoftware { get; set; }
-        public static List<IntPtr> FindWindow(int id,string software)
+        public static List<IntPtr> FindWindow(int id)
         {
 
             Container container = new Container(MyFindCall);
             MyId = id;
-            MySoftware = software;
             EnumWindows(container, 0);
             MessageBox.Show(test);
             return MyHandleList;
@@ -70,13 +79,38 @@ namespace QQVideo.Utils
         {
             int thisId = 0;
             GetWindowThreadProcessId(hwnd, out thisId);
-            if (thisId==MyId)
+            if (thisId==MyId && IsWindow(hwnd) &&IsWindowEnabled(hwnd) && IsWindowVisible(hwnd))
             {
+                StringBuilder sb = new StringBuilder(512);
+                GetWindowText(hwnd, sb, sb.Capacity);
+                test += sb.ToString()+"\n";
                 MyHandleList.Add(hwnd);         
             }
 
             return true;
         }
+      
+      
+        public void ClickOneKey(byte key)
+        {
+            keybd_event(key, 0, 0, 0);
+            keybd_event(key, 0, 2, 0);
+        }
+
+        public void ClickThreeKey(byte key1,byte key2,byte key3)
+        {
+            keybd_event(key1, 0, 0, 0);
+            keybd_event(key2, 0, 0, 0);
+            keybd_event(key3, 0, 0, 0);
+            keybd_event(key3, 0, 2, 0);
+        
+        }
+        public void ReleaseTwoKey(byte key1,byte key2)
+        {
+            keybd_event(key1, 0, 2, 0);
+            keybd_event(key2, 0, 2, 0);
+        }
+
 
     }
 

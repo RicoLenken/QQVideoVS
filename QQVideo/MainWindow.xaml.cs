@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using QQVideo.View;
+using System.Windows.Media.Animation;
 
 namespace QQVideo
 {
@@ -21,30 +23,32 @@ namespace QQVideo
     /// </summary>
     public partial class MainWindow : Window
     {
-        private QQUtil qqUtil = new QQUtil();
+        int length = 200;
+        int windowHeight = 200;
+        float time = 0.2f;
+        private QQVideoView qqVideoView; 
+
         public MainWindow()
-        {       
+        {
+           
             InitializeComponent();
+            #region 初始位置
+            this.Height = windowHeight;
             double left = (SystemParameters.PrimaryScreenWidth - this.Width) / 2;
             this.Left = left;
             //MessageBox.Show(SystemParameters.PrimaryScreenWidth.ToString() + "," + this.Width + "," + left);
             this.Top = 100;
+            #endregion
+            #region ViewModel
+            this.qqVideoView = new QQVideoView(this);
+            this.DataContext = qqVideoView;
+            #endregion
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-            qqUtil.GetQQPath();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            qqUtil.SendKey();
-        }
-
+     
+       
         private void Window_Closed(object sender, EventArgs e)
         {
-            qqUtil.KillProcess();
+                   
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -54,7 +58,44 @@ namespace QQVideo
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
+            qqVideoView.CloseProcess();
             Application.Current.Shutdown();
         }
+
+        private void btnSetUp_Click(object sender, RoutedEventArgs e)
+        {
+     
+            DoubleAnimation doubleAnimation = new DoubleAnimation();
+            doubleAnimation.From = this.Height;
+            doubleAnimation.To = windowHeight + length;
+            doubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(time));
+            Storyboard story = new Storyboard();
+            story.Children.Add(doubleAnimation);
+            Storyboard.SetTargetName(doubleAnimation, this.Name);
+            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath(Window.HeightProperty));
+            story.Begin(this); 
+
+        }
+
+        private void winQQVideo_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (this.Height>windowHeight)
+            {
+                DoubleAnimation doubleAnimation = new DoubleAnimation();
+                doubleAnimation.From = this.Height;
+                doubleAnimation.To = windowHeight;
+                doubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(time));
+
+                Storyboard story = new Storyboard();
+                story.Children.Add(doubleAnimation);
+                Storyboard.SetTargetName(doubleAnimation, this.Name);
+                Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath(Window.HeightProperty));
+
+                story.Begin(this);
+
+            }
+        }
+
+    
     }
 }

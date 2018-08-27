@@ -8,65 +8,82 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Runtime.InteropServices;
 using System.Threading;
-
+using QQVideo.Utils.Interface;
+using QQVideo.Utils;
+using System.Collections;
 
 namespace QQVideo.Utils
 {
     public class QQUtil
     {
 
-
         private Process qqProcess;
+        private IRegistryKeyUtil registryUtil=new RegistryKeyUtil();
+        private string key = "QQPath";
+        private string application = "QQVideo";
         public string QQPath { get; set; }//QQ路径
-        public List<IntPtr> QQHandleList { get; set; }//句柄
-        //WM_SYSKEYDOWN = 0x0104;
-         
-        public void GetQQPath()//获得qq的快捷方式
+                                          //WM_SYSKEYDOWN = 0x0104;
+        public void GetRegistryKey()//取得路径
         {
+            Dictionary<string, string> dic = registryUtil.GetKey(application, key);
+            if (dic.Count > 0)
+            {
+                QQPath = dic[key];
+            }
+            else
+            {
+                //MessageBox.Show("找不到QQ的路径，请重新设置!");
+            }
+        }
 
+
+        public void SetRegistryKey()//设置路径
+        {
             OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Filter = "快捷方式|*.lnk";
             fileDialog.Multiselect = false;
+            fileDialog.Filter = "快捷方式|*.lnk";
+            fileDialog.Title = "选择QQ快捷方式";
             if ((bool)fileDialog.ShowDialog())
             {
+                registryUtil.SetKey(application, key, fileDialog.FileName);
                 QQPath = fileDialog.FileName;
-                qqProcess = Process.Start(QQPath);//启动程序
-                Thread.Sleep(5000);
-                MessageBox.Show("程序进程是"+qqProcess.Id.ToString());
-                QQHandleList = WindowUtil.FindWindow(qqProcess.Id, "Bandicam");
-                
             }
-
         }
 
-       
-        public void SendKey() 
-        {
-           
-         
-
-        }
-        public void KillProcess()
+        public void StartProcess()//启动进程
         {
             try
             {
-                Process process = Process.GetProcessById(qqProcess.Id);
-                process.Kill();
+                qqProcess = Process.Start(QQPath);//启动程序
+            }
+            catch {
+                MessageBox.Show("启动失败，请检查QQ路径!");
+            }
+              
+        }
+  
+        public void CloseProcess()
+        {
+            try
+            {
+                Process[] processList = Process.GetProcessesByName("QQ");
+                foreach (Process process in processList)
+                {
+                    process.Kill();
+                }
+              
             }
             catch { }
             
         }
-
-        private void GetQQRegistryKey()//尝试从注册表中找到QQ快捷方式路径
+        public void SendKey()
         {
+
 
 
         }
-        private void SetQQRegistryKey()//将QQ快捷方式写入注册表
-        {
-           
 
-        } 
+
 
 
 
