@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using QQVideo.Utils;
 using Prism.Commands;
 using System.Windows;
+using System.Timers;
 
 namespace QQVideo.View
 {
@@ -17,12 +18,14 @@ namespace QQVideo.View
         #region 对象
         private  QQUtil qqUtil;//qq
         private BandicamUtil bandicamUtil;//Bandicam
-        private Window mainWindow;
-        private Time time;
+        private MainWindow mainWindow;
+        private Time time;//计时窗口
+        private Timer timer = new Timer();
         #endregion
         #region 数据属性对象
         private string qqPath;
         private string bandicamPath;
+        private string now;
         #endregion
         #region 数据属性
         public string QQPath //QQ快捷方式路径
@@ -53,6 +56,12 @@ namespace QQVideo.View
             }
 
         }
+        public string Now
+        {
+            get { return now; }
+            set { now = value; RaisePropertyChanged("Now"); }
+        }//时间
+
         #endregion
         #region 命令属性
         public DelegateCommand StartQQCommand { get; set; }//启动软件
@@ -66,8 +75,12 @@ namespace QQVideo.View
         #endregion
 
         #region 构造
-        public QQVideoView(Window mainWindow)
+        public QQVideoView(MainWindow mainWindow)
         {
+            timer.Interval = 1000;
+            timer.Elapsed += new ElapsedEventHandler(Timer_Elapsed);
+            timer.Enabled = true;
+            timer.Start();
             qqUtil = new QQUtil();
             bandicamUtil = new BandicamUtil();
             this.QQPath="test";
@@ -100,7 +113,12 @@ namespace QQVideo.View
         }
         public void StartBandicam()
         {
-            bandicamUtil.StartProcess();
+            if (bandicamUtil.bandicamProcess==null)
+            {
+                bandicamUtil.StartProcess();
+            }
+
+           
         }
         public void SetUpBandicam()
         {
@@ -122,28 +140,36 @@ namespace QQVideo.View
         }
         public void StopRec()
         {
-            bandicamUtil.StopRec();
-            time.Close();
-            time = null;
+          
+            bandicamUtil.StopRec();        
+         
         }
         public void StartTimeRec()
         {
-            //开启定时
+            ////开启定时
             if (CheckBandicam())
             {
-                time = new Time();
+                //弹窗选择时间
+                this.mainWindow.Hide();
+                time =Time.CreateTime(this.mainWindow, bandicamUtil);
                 time.Show();
+
             }
-            
+
 
         }
         #endregion
         #region 函数
         public void CloseProcess()
         {
-            qqUtil.CloseProcess();
+           
             bandicamUtil.CloseProcess();
+            CloseQQProcess();
 
+        }
+        public void CloseQQProcess()
+        {
+            qqUtil.CloseProcess();
         }
         public bool CheckBandicam()
         {
@@ -157,7 +183,11 @@ namespace QQVideo.View
                 return true;
             }
         }
-                
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            this.Now = DateTime.Now.ToString("F");
+        }
         #endregion
     }
 }

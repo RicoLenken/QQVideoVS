@@ -10,9 +10,9 @@
        AllowsTransparency="True"  Background="{x:Null}" 
         WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown"
         MouseLeave="winQQVideo_MouseLeave"
-       ResizeMode="NoResize">
+       ResizeMode="NoResize" >
 
-    <Window.Resources>
+    <Window.Resources   >
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Style/Button.xaml"></ResourceDictionary>
@@ -41,8 +41,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition />
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
 
                 <Label Content="家属会见录像软件" FontSize="20" Foreground="White" 
@@ -50,9 +50,12 @@
                 <DockPanel Grid.Column="1" HorizontalAlignment="Center">
                     <Label Content="当前系统时间:" FontSize="20" Foreground="White" 
                           />
-                    <Label Content="{Binding QQPath}" FontSize="20" Foreground="White" 
+                    <Label Content="{Binding Now}" FontSize="20" Foreground="White" 
                         />
                 </DockPanel>
+                <Button x:Name="btnHide" Height="30" Width="30"  Style="{StaticResource ButtonWhite}" Grid.Column="2" Click="btnHide_Click"  >
+                    <Image Source="Image/Eye.png"></Image>
+                </Button>
 
                 <Button x:Name="btnClose" Height="30" Width="30"  Style="{StaticResource ButtonWhite}" Click="btnClose_Click" Grid.Column="3"  >
                     <Image Source="Image/Close.png"></Image>
@@ -72,6 +75,15 @@
                         <Image Source="Image/Bandicam.jpg"></Image>
                     </Button>
                     <Label Content="启动录像" Foreground="White"></Label>
+                </StackPanel>
+                <!--设置屏幕-->
+                <StackPanel VerticalAlignment="Center">
+                    <Button  Margin="10,0" Height="80" Width="80" Style="{StaticResource ButtonImage}"  Command="{Binding SetUpScreenCommand}" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Image/Show.jpg"/>
+                        </Button.Background>
+                    </Button>
+                    <Label Content="屏录显示/隐藏" Foreground="White"></Label>
                 </StackPanel>
                 <!--录像-->
                 <StackPanel VerticalAlignment="Center">
@@ -101,15 +113,7 @@
 
 
 
-                <!--设置屏幕-->
-                <StackPanel VerticalAlignment="Center">
-                    <Button  Margin="10,0" Height="80" Width="80" Style="{StaticResource ButtonImage}"  Command="{Binding SetUpScreenCommand}" >
-                        <Button.Background>
-                            <ImageBrush ImageSource="Image/Show.jpg"/>
-                        </Button.Background>
-                    </Button>
-                    <Label Content="屏录显示/隐藏" Foreground="White"></Label>
-                </StackPanel>
+              
 
 
 
@@ -124,13 +128,6 @@
                     <Label Content="参数设置" Foreground="White"></Label>
                 </StackPanel>
                
-               
-
-
-
-
-
-
 
             </StackPanel>
 

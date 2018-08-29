@@ -14,10 +14,10 @@ namespace QQVideo.Utils
 {
     public class BandicamUtil
     {
-        private bool playFlag = false;
+        //private bool playFlag = false;
         private WindowUtil windowUtil = new WindowUtil();
         public Process bandicamProcess;
-        private string key= "BandicamPath";
+        private string key = "BandicamPath";
         private IRegistryKeyUtil registryUtil = new RegistryKeyUtil();
         private string application = "QQVideo";
         public string BandicamPath { get; set; }//Bandicam路径
@@ -64,7 +64,7 @@ namespace QQVideo.Utils
             try
             {
                 Process process = Process.GetProcessById(bandicamProcess.Id);
-                process.Kill();            
+                process.Kill();
 
             }
             catch { }
@@ -72,7 +72,7 @@ namespace QQVideo.Utils
         }
         public void SetScreen()
         {
-            windowUtil.ClickThreeKey(keyCode.vbKeyControl,keyCode.vbKeyAlt,keyCode.vbKeyH);
+            windowUtil.ClickThreeKey(keyCode.vbKeyControl, keyCode.vbKeyAlt, keyCode.vbKeyH);
             Thread.Sleep(100);//不能同时释放
             windowUtil.ReleaseTwoKey(keyCode.vbKeyControl, keyCode.vbKeyAlt);
         }
@@ -80,21 +80,19 @@ namespace QQVideo.Utils
 
         public void StartRec()
         {
-            if (!playFlag)
-            {
-                windowUtil.ClickOneKey(keyCode.vbKeyF12);
-                playFlag = true;
-            }
-          
+
+            windowUtil.ClickOneKey(keyCode.vbKeyF12);
+            //playFlag = true;
+
 
         }
         public void StopRec()
         {
-            if (playFlag)
-            {
-                windowUtil.ClickOneKey(keyCode.vbKeyF12);
-                playFlag = false;
-            }
+
+
+            windowUtil.ClickOneKey(keyCode.vbKeyF12);
+            //playFlag = false;
+
 
         }
 

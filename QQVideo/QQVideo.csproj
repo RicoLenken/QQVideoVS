@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -63,6 +63,9 @@
       <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="NSubstitute, Version=0.9.0.34, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <HintPath>..\packages\NSubstitute.0.9.0.34\lib\35\NSubstitute.dll</HintPath>
       <Private>True</Private>
@@ -77,11 +80,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -100,16 +101,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Style\Converter\ScaleConverter.cs" />
     <Compile Include="Time.xaml.cs">
       <DependentUpon>Time.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\BandicamUtil.cs" />
+    <Compile Include="Utils\HotKeyUtil.cs" />
     <Compile Include="Utils\Interface\IRegistryKeyUtil.cs" />
     <Compile Include="Utils\keyCode.cs" />
     <Compile Include="Utils\QQUtil.cs" />
     <Compile Include="Utils\RegistryKeyUtil.cs" />
     <Compile Include="Utils\WindowUtil.cs" />
     <Compile Include="View\QQVideoView.cs" />
+    <Compile Include="View\TimeView.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -127,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Style\Default.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\TimeBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -153,6 +161,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Fakes Include="Fakes\System.Windows.Interactivity.fakes" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -179,16 +188,47 @@
     <Resource Include="Image\Set.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\Time.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\hand.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Image\Stop.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\Show.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Time.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Calendar.png" />
+    <Resource Include="Image\Clock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Hand.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Eye.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\QQVideo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Down.png" />
+    <Resource Include="Image\Up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\DownDown.png" />
+    <Resource Include="Image\UpUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

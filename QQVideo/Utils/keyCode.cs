@@ -8,8 +8,11 @@ namespace QQVideo.Utils
 {
     public  static class keyCode
     {
+
+
+    
         #region bVk参数 常量定义
- 
+
         public static byte vbKeyLButton = 0x1;    // 鼠标左键
         public static byte vbKeyRButton = 0x2;    // 鼠标右键
         public static byte vbKeyCancel = 0x3;     // CANCEL 键
