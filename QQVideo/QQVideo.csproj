@@ -115,6 +115,7 @@
     <Compile Include="Utils\QQUtil.cs" />
     <Compile Include="Utils\RegistryKeyUtil.cs" />
     <Compile Include="Utils\ReplayUtil.cs" />
+    <Compile Include="Utils\VideoUtil.cs" />
     <Compile Include="Utils\WindowUtil.cs" />
     <Compile Include="View\QQVideoView.cs" />
     <Compile Include="View\ReplayView.cs" />
@@ -246,6 +247,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\SearchVideo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Pause.png" />
+    <Resource Include="Image\Play.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

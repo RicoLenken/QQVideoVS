@@ -62,8 +62,18 @@ namespace QQVideo
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            qqVideoView.CloseProcess();
-            Application.Current.Shutdown();
+              
+            MessageBoxResult result = MessageBox.Show("确认退出？", "", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                qqVideoView.CloseProcess();
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                return;
+            }
+           
         }
 
         private void btnSetUp_Click(object sender, RoutedEventArgs e)

@@ -14,16 +14,15 @@ namespace QQVideo.View
 {
     public class QQVideoView : NotificationObject
     {
-
         #region 对象
         private QQUtil qqUtil =new QQUtil();//qq
-        private BandicamUtil bandicamUtil =new BandicamUtil();//Bandicam
-        private ReplayUtil replayUtil = new ReplayUtil();//回放
+        private BandicamUtil bandicamUtil =new BandicamUtil();//Bandicam     
         private MainWindow mainWindow;
         private Time time;//计时窗口
         private Replay replay;
         private Timer timer = new Timer();
         private bool startFlag = false;
+        private ReplayUtil replayUtil = new ReplayUtil();//回放
         #endregion
         #region 数据属性对象
         private string qqPath;
@@ -116,7 +115,6 @@ namespace QQVideo.View
         public DelegateCommand SetUpReplayCommand { get; set; }//设置录像搜索路径
         public DelegateCommand ReplayCommand { get; set; }//回放
         #endregion
-
         #region 构造
         public QQVideoView(MainWindow mainWindow)
         {
@@ -144,11 +142,10 @@ namespace QQVideo.View
             this.StopRecCommand = new DelegateCommand(StopRec);
             this.StartTimeRecCommand = new DelegateCommand(StartTimeRec);
             this.SetUpReplayCommand = new DelegateCommand(SetUpReplay);
-            this.ReplayCommand = new DelegateCommand(StartReplay); 
-            #endregion
+            this.ReplayCommand = new DelegateCommand(StartReplay);
+            #endregion     
         }
         #endregion
-
         #region 命令
         public void StartQQ()//启动QQ
         {
@@ -173,7 +170,10 @@ namespace QQVideo.View
         }
         public void StartBandicam()
         { 
-                bandicamUtil.StartProcess();
+            bandicamUtil.StartProcess();
+            System.Threading.Thread hideThread = new System.Threading.Thread(HideRec);
+            hideThread.Start();
+
 
         }
         public void SetUpBandicam()
@@ -254,6 +254,12 @@ namespace QQVideo.View
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             this.Now = DateTime.Now.ToString("F");
+        }
+        public void HideRec()
+        {
+            System.Threading.Thread.Sleep(7000);
+            SetUpScreen();//隐藏屏幕
+         
         }
         #endregion
     }
