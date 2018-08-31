@@ -1,4 +1,5 @@
-﻿using QQVideo.View;
+﻿using QQVideo.Utils;
+using QQVideo.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,18 +25,18 @@ namespace QQVideo
         private static Replay singleReplay;
         private ReplayView replayView;
         #endregion
-        public Replay(Window window)
+        public Replay(Window window, ReplayUtil replayUtil)
         {
-            replayView = new ReplayView(this);
+            replayView = new ReplayView(this, replayUtil);
             this.DataContext = replayView;
             this.Owner = window;
             InitializeComponent();
         }
-        public static Replay CreateReplay(Window window)
+        public static Replay CreateReplay(Window window,ReplayUtil replayUtil)
         {
             if (singleReplay==null)
             {
-                singleReplay = new Replay(window);
+                singleReplay = new Replay(window, replayUtil);
             }
             return singleReplay;
         }

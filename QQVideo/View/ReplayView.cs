@@ -1,7 +1,9 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.ViewModel;
+using QQVideo.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +17,7 @@ namespace QQVideo.View
         #endregion
         #region 数据对象
         private List<string> videoList;
+        private string videoPath;
         private DateTime searchDate =DateTime.Now;
         #endregion
         #region 数据属性
@@ -42,8 +45,10 @@ namespace QQVideo.View
         public DelegateCommand SearchCommand { get; set; }//搜索视频
         #endregion
         #region 构造函数
-        public ReplayView(Window window)
+        public ReplayView(Window window, ReplayUtil replayUtil)
         {
+            this.videoPath = replayUtil.ReplayPath;
+            GetFile();
             this.SearchCommand = new DelegateCommand(Search);
         }
         #endregion
@@ -56,6 +61,19 @@ namespace QQVideo.View
         }
         #endregion
         #region 函数
+        private void GetFile()
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(this.videoPath);
+            FileInfo[] fileList = directoryInfo.GetFiles();
+            List<string> fileNameList = new List<string>();
+            foreach (FileInfo file in fileList)
+            {
+                fileNameList.Add(file.Name);
+                
+            }
+            this.VideoList = fileNameList;
+
+        }
         #endregion
 
     }

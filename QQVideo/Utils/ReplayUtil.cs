@@ -1,10 +1,10 @@
-﻿using Microsoft.Win32;
-using QQVideo.Utils.Interface;
+﻿using QQVideo.Utils.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace QQVideo.Utils
 {
@@ -31,14 +31,20 @@ namespace QQVideo.Utils
 
         public void SetRegistryKey()//设置路径
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Multiselect = false;
-            fileDialog.Filter = "文件夹|*.*";
-            fileDialog.Title = "选择回放路径文件夹";
-            if ((bool)fileDialog.ShowDialog())
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+            folderDialog.Description = "请选择录像文件所在的文件夹！";
+            if (folderDialog.ShowDialog()==DialogResult.OK)
             {
-                registryUtil.SetKey(application, key, fileDialog.FileName);
-                ReplayPath = fileDialog.FileName;
+                if (!string.IsNullOrEmpty(folderDialog.SelectedPath))
+                {
+
+                    registryUtil.SetKey(application, key, folderDialog.SelectedPath);
+                    ReplayPath = folderDialog.SelectedPath;
+
+                }
+                else
+                { MessageBox.Show("文件夹不能为空！"); }
+             
             }
         }
 

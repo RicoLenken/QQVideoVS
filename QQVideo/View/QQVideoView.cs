@@ -126,10 +126,14 @@ namespace QQVideo.View
             timer.Start();
             this.QQPath = "test";
             this.mainWindow = mainWindow;
+            #region 路径
             qqUtil.GetRegistryKey();//读取路径   
             bandicamUtil.GetRegistryKey();
+            replayUtil.GetRegistryKey();
             BandicamPath = bandicamUtil.BandicamPath;
             QQPath = qqUtil.QQPath;
+            videoPath = replayUtil.ReplayPath;
+            #endregion
             #region 命令属性赋值
             this.QQCommand = new DelegateCommand(StartQQ);
             this.SetUpQQCommand = new DelegateCommand(SetUpQQ);
@@ -221,16 +225,15 @@ namespace QQVideo.View
 
             }
 
-
         }
         public void SetUpReplay()
         {
-            replayUtil.GetRegistryKey();
+            replayUtil.SetRegistryKey();
             this.VideoPath = replayUtil.ReplayPath;
         }
-        public void StartReplay()
+        public void StartReplay()//开始回放
         {
-            replay= Replay.CreateReplay(this.mainWindow);
+            replay= Replay.CreateReplay(this.mainWindow,replayUtil);
             replay.Show();
 
         }
