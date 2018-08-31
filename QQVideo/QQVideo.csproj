@@ -101,6 +101,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Replay.xaml.cs">
+      <DependentUpon>Replay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Style\Converter\ScaleConverter.cs" />
     <Compile Include="Time.xaml.cs">
       <DependentUpon>Time.xaml</DependentUpon>
@@ -111,8 +114,10 @@
     <Compile Include="Utils\keyCode.cs" />
     <Compile Include="Utils\QQUtil.cs" />
     <Compile Include="Utils\RegistryKeyUtil.cs" />
+    <Compile Include="Utils\ReplayUtil.cs" />
     <Compile Include="Utils\WindowUtil.cs" />
     <Compile Include="View\QQVideoView.cs" />
+    <Compile Include="View\ReplayView.cs" />
     <Compile Include="View\TimeView.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -126,6 +131,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Replay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Style\Button.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -161,7 +170,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Fakes Include="Fakes\System.Windows.Interactivity.fakes" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -229,6 +237,15 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\QQClose.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Search.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\SearchVideo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

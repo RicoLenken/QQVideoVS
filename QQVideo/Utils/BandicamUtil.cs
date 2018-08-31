@@ -14,9 +14,9 @@ namespace QQVideo.Utils
 {
     public class BandicamUtil
     {
-        //private bool playFlag = false;
         private WindowUtil windowUtil = new WindowUtil();
-        public Process bandicamProcess;
+        private Process bandicamProcess;
+        private Process[] processList;
         private string key = "BandicamPath";
         private IRegistryKeyUtil registryUtil = new RegistryKeyUtil();
         private string application = "QQVideo";
@@ -48,15 +48,17 @@ namespace QQVideo.Utils
 
         public void StartProcess()
         {
-            try
+            if (StartCheck())
             {
-                bandicamProcess = Process.Start(BandicamPath);//启动程序
+                try
+                {
+                    bandicamProcess = Process.Start(BandicamPath);//启动程序
+                }
+                catch
+                {
+                    MessageBox.Show("启动失败，请检查Bandicam路径!");
+                }
             }
-            catch
-            {
-                MessageBox.Show("启动失败，请检查Bandicam路径!");
-            }
-
         }
 
         public void CloseProcess()
@@ -65,9 +67,11 @@ namespace QQVideo.Utils
             {
                 Process process = Process.GetProcessById(bandicamProcess.Id);
                 process.Kill();
+                this.bandicamProcess = null;
 
             }
             catch { }
+
 
         }
         public void SetScreen()
@@ -82,8 +86,6 @@ namespace QQVideo.Utils
         {
 
             windowUtil.ClickOneKey(keyCode.vbKeyF12);
-            //playFlag = true;
-
 
         }
         public void StopRec()
@@ -91,12 +93,35 @@ namespace QQVideo.Utils
 
 
             windowUtil.ClickOneKey(keyCode.vbKeyF12);
-            //playFlag = false;
 
 
         }
+        public bool RecCheck()
+        {
+            processList = Process.GetProcessesByName("bdcam");
+            if (processList ==null || !(processList.Length>0))
+            {
+                MessageBox.Show("请先启动录屏软件");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
-
-
+        public bool StartCheck()
+        {
+            processList = Process.GetProcessesByName("bdcam");
+            if (processList == null || !(processList.Length > 0))
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("录屏软件已启动，请开始录像！");
+                return false;
+            }
+        }
     }
 }

@@ -51,9 +51,11 @@ namespace QQVideo
   
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+    
+            this.DragMove();
+            
         }
     }
 }

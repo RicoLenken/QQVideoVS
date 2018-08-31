@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:QQVideo"    
         mc:Ignorable="d"
         WindowStartupLocation="Manual"  
-        Title="家属会见软件" Height="400" Width="800" Closed="Window_Closed"  
+        Title="家属会见软件" Height="450" Width="850"  
        AllowsTransparency="True"  Background="{x:Null}" 
         WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown"
         MouseLeave="winQQVideo_MouseLeave"
@@ -62,12 +62,12 @@
                 </Button>
             </Grid>
             <StackPanel Orientation="Horizontal" Grid.Row="1">
-                <StackPanel  VerticalAlignment="Center">
-                    <Button Margin="20,0,10,0" Height="80" Width="80" Style="{StaticResource ButtonIcon}"
-                            Command="{Binding StartQQCommand}">
-                        <Image Source="Image/QQ.png"></Image>
+                <StackPanel  VerticalAlignment="Center" Margin="10,0,0,0">
+                    <Button Margin="10,0" Height="80" Width="80" Style="{StaticResource ButtonIcon}"
+                            Command="{Binding QQCommand}">
+                        <Image Source="{Binding QQImage}"></Image>
                     </Button>
-                    <Label Content="启动QQ" Foreground="White"></Label>
+                    <Label Content="{Binding QQString}" Foreground="White" ></Label>
                 </StackPanel>
                 <StackPanel VerticalAlignment="Center">
                     <Button Margin="10,0" Height="80" Width="80" Style="{StaticResource ButtonIcon}" 
@@ -113,8 +113,16 @@
 
 
 
+                <StackPanel VerticalAlignment="Center">
+                    <Button x:Name="btnReplay" Margin="10,0" Height="80" Width="80" Style="{StaticResource ButtonImage}"  
+                         Command="{Binding ReplayCommand}" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Image/Search.jpg"/>
+                        </Button.Background>
+                    </Button>
+                    <Label Content="搜索回放" Foreground="White"></Label>
+                </StackPanel>
               
-
 
 
                 <StackPanel VerticalAlignment="Center">
@@ -129,11 +137,14 @@
                 </StackPanel>
                
 
+                
+                
+                
             </StackPanel>
 
             <!--设置区域-->
-            <Border Grid.Row="3" Margin="20" BorderThickness="2" BorderBrush="#FF79797A" CornerRadius="10">
-                <Grid  >
+            <Border Grid.Row="3" BorderThickness="2" Margin="20,0"   BorderBrush="#FF79797A" CornerRadius="10" >
+                <Grid >
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -147,7 +158,7 @@
                     <!--文字-->
                     <Label Content="QQ快捷方式" Foreground="White" FontSize="18" />
                     <Label Content="录像快捷方式" Foreground="White" FontSize="18" Grid.Row="1" />
-                    <Label Content="查看录像路径" Foreground="White" FontSize="18" Grid.Row="2" />
+
                     <!--路径-->
                     <Border Style="{StaticResource textBox}" Grid.Column="1">
                         <TextBlock IsEnabled="False" Text="{Binding QQPath}" ></TextBlock>
@@ -155,9 +166,7 @@
                     <Border Style="{StaticResource textBox}" Grid.Column="1" Grid.Row="1" >
                         <TextBlock IsEnabled="False" Text="{Binding BandicamPath}"></TextBlock>
                     </Border>
-                    <Border Style="{StaticResource textBox}" Grid.Column="1" Grid.Row="2">
-                        <TextBlock IsEnabled="False" Text="{Binding PlayPath}"></TextBlock>
-                    </Border>
+
                     <!--选择-->
                     <Button  Height="30" Width="30"  Style="{StaticResource ButtonWhite}"   Grid.Column="3" Command="{Binding SetUpQQCommand}"  >
                         <Image Source="Image/SetUp.png"></Image>
@@ -166,8 +175,14 @@
                              Command="{Binding SetUpBandicamCommand}">
                         <Image Source="Image/SetUp.png"></Image>
                     </Button>
-                    <Button  Height="30" Width="30"  Style="{StaticResource ButtonWhite}"   Grid.Column="3" Grid.Row="2"  >
-                        <Image Source="Image/SetUp.png"></Image>
+
+                    <Label Content="回放录像路径" Foreground="White" FontSize="18" Grid.Row="2" />
+                    <Border Style="{StaticResource textBox}" Grid.Column="1" Grid.Row="2">
+                        <TextBlock IsEnabled="False" Text="{Binding VideoPath}"></TextBlock>
+                    </Border>
+                    <Button  Height="30" Width="30"  Style="{StaticResource ButtonWhite}"   Grid.Column="3" Grid.Row="2"  
+                             Command="{Binding SetUpReplayCommand}">
+                        <Image Source="Image/SetUp.png" ></Image>
                     </Button>
 
                 </Grid>

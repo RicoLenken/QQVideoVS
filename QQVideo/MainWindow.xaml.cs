@@ -25,12 +25,15 @@ namespace QQVideo
     /// </summary>
     public partial class MainWindow : Window
     {
-        int length = 200;
+        #region 对象
+        int length = 250;
         int windowHeight = 200;
         float time = 1f;
         private QQVideoView qqVideoView;
         private System.Windows.Forms.NotifyIcon icon;
         ElasticEase ease = new ElasticEase();
+        private bool moveFlag = false;
+        #endregion
         public MainWindow()
         {
             #region ViewModel
@@ -55,17 +58,6 @@ namespace QQVideo
             HotKeyUtil hk = new HotKeyUtil(this,HotKeyUtil.KeyModifiers.MOD_ALT,keyCode.vbKeyF1);
             hk.OnHotKey += this.OnHotkey;
 
-        }
-
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            this.DragMove();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -145,5 +137,20 @@ namespace QQVideo
         }
 
         #endregion
+
+        #region 鼠标移动
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            moveFlag = true;
+            if (moveFlag)
+            {
+                this.DragMove();
+            }      
+        }
+
+
+        #endregion
+
+
     }
 }

@@ -52,6 +52,8 @@ namespace QQVideo.Utils
         [DllImport("user32.dll")]
         public static extern void GetClientRect(IntPtr hWnd, out Rect rect);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern bool GetCursorPos(out Point pt);
 
         public static void F11Clic()
         {

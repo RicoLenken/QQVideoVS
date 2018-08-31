@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Time" Height="200" Width="350" AllowsTransparency="True"  ResizeMode="NoResize" Background="{x:Null}"
         WindowStyle="None" WindowStartupLocation="Manual"
-        Topmost="True">
+        Topmost="True" MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -38,7 +38,7 @@
                     <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="关闭QQ请按Alt+F1" FontSize="18" Foreground="White"></Label>
-                <Button x:Name="btnClose" Height="25" Width="25" Style="{StaticResource ButtonWhiteSmall}" Click="btnClose_Click" Grid.Column="1" >
+                <Button x:Name="btnClose" Height="25" Width="25" Style="{StaticResource ButtonWhiteSmall}" Command="{Binding CloseCommand}" Grid.Column="1" >
                     <Image Source="Image/Close.png"></Image>
                 </Button>
             </Grid>
